@@ -5,4 +5,6 @@ A more detailed HowTo setup the script, Split GPG and how the parts fit together
 
 If you have any questions or suggestions, feel free to raise an issue.
 
+The idea for this script was heavily inspired by this script https://github.com/sorinipate/vpn-up-for-openconnect/
+
 - One7two99
