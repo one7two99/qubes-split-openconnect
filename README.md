@@ -15,7 +15,7 @@ Quick install note
 5. Add the following lines to /rw/config/rc.local
 ```
 # Launch qubes-split-openconnect
-export QUBES_GPG_DOMAIN=my-work-gpg
+export QUBES_GPG_DOMAIN=<YOUR-SPLIT-GPG-VM/VAULT-VM>
 /rw/config/qubes-split-openconnect.sh start
 ```
 6. Reboot the VPN ProxyVM
