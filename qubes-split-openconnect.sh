@@ -1,5 +1,5 @@
 #!/bin/bash
-# Name    : openconnect-up.sh
+# Name    : qubes-split-openconnect.sh
 # Purpose : A wrapper to connect to a AnyConnect based VPN-Gatway using openconnect
 # Author  : one7two99
 # Version : 0.9
