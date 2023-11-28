@@ -1,10 +1,9 @@
 #!/bin/bash
-# Name    : qubes-split-openconnect.sh
+# Name    : openconnect-up.sh
 # Purpose : A wrapper to connect to a AnyConnect based VPN-Gatway using openconnect
 # Author  : one7two99
-# Version : 0.9
+# Version : 1.0
 # Date    : 11/28/2034
-# Github  : https://github.com/one7two99/qubes-split-openconnect
 # Inspired by: https://github.com/sorinipate/vpn-up-for-openconnect/blob/main/vpn-up.command
 #              Author    : Sorin-Doru Ipate
 #              Edited by : Mohammad Amin Dadgar
@@ -25,6 +24,7 @@ export PROTOCOL=anyconnect
 # Split GPG has to work for this solution as the private key is placed in a Qubes VaultVM
 # See https://www.qubes-os.org/doc/split-gpg/ how to setup Split GPG
 export VPN_PASSFILE=/rw/config/vpn-password.gpg
+export QUBES_GPG_DOMAIN=<YOUR-SPLIT-GPG-VM>
 
 ### BEGIN of functions
 function start(){
@@ -45,6 +45,7 @@ function start(){
           printf "Process ID (PID) stored in $PID_FILE_PATH ...\n"
           printf "Logs file (LOG) stored in $LOG_FILE_PATH ...\n"
           printf "Starting the $VPN_NAME on $VPN_HOST using $PROTOCOL ...\n"
+          sudo -u user DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send -t 6000 -i /usr/share/icons/Adwaita/scalable/status/dialog-information-symbolic.svg "$HOSTNAME" "Starting the $VPN_NAME on $VPN_HOST using $PROTOCOL"
           # replace /etc/resolv.conf with a symbolic link to /run/resolvconf/resolv.con
           mv /etc/resolv.conf /etc/resolv.conf.bak
           ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
@@ -60,6 +61,7 @@ function start(){
           if is_vpn_running
              then
                 printf "Connected to $VPN_NAME\n"
+                sudo -u user DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send -t 6000 -i /usr/share/icons/Adwaita/scalable/status/dialog-information-symbolic.svg "$HOSTNAME" "Connected to $VPN_NAME"
                 print_current_ip_address
                 # add firewall rules for NAT
                 # https://github.com/Qubes-Community/Contents/blob/master/docs/configuration/vpn.md
@@ -72,6 +74,7 @@ function start(){
                 iptables -F OUTPUT
              else
                 printf "Failed to connect!\n"
+                sudo -u user DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send -t 3000 -i /usr/share/icons/Adwaita/scalable/status/dialog-warning-symbolic.svg "$HOSTNAME" "Failed to connect $VPN_NAME on $VPN_HOST using $PROTOCOL"
           fi
     fi
 }
@@ -109,6 +112,7 @@ function is_vpn_running() {
 function print_current_ip_address() {
    local ip=$(dig @resolver4.opendns.com myip.opendns.com +short)
    printf "Your current external IP address is $ip ...\n"
+   sudo -u user DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send -t 3000 -i /usr/share/icons/Adwaita/scalable/status/dialog-information-symbolic.svg "$HOSTNAME" "Your current external IP address is $ip"
 }
 ### END of functions
 
