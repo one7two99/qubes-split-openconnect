@@ -2,7 +2,7 @@
 # Name    : openconnect-up.sh
 # Purpose : A wrapper to connect to a AnyConnect based VPN-Gatway using openconnect
 # Author  : one7two99
-# Version : 1.0
+# Version : 0.9
 # Date    : 11/28/2034
 # Github  : https://github.com/one7two99/qubes-split-openconnect
 # Inspired by: https://github.com/sorinipate/vpn-up-for-openconnect/blob/main/vpn-up.command
